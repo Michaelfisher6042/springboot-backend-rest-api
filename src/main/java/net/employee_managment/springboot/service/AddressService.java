@@ -5,7 +5,7 @@ import net.employee_managment.springboot.model.Address;
 import java.util.List;
 
 public interface AddressService {
-    Address saveAddress(Address spouse);
+    Address saveAddress(Address address);
     List<Address> saveAddresses(List<Address> addresses);
     List<Address> getAllAddress();
     Address getAddressById(long id);

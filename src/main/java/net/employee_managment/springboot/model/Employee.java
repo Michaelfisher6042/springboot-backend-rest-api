@@ -2,14 +2,9 @@
 package net.employee_managment.springboot.model;
 
 
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "employee")
@@ -42,26 +37,27 @@ public class Employee {
 			foreignKey = @ForeignKey(name = "EMPLOYEE_Address_FK"), nullable = true)
 	private List<Address> addresses;
 
-	//@NotNull
+	@NotNull
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "Id",
 			foreignKey = @ForeignKey(name = "EMPLOYEE_Child_FK"), nullable = true)
 	private List<Child> children;
 
 	public Employee(){
-		System.out.println("ec1");
+		//System.out.println("ec1");
 	}
 	public Employee(long empId){
 		super();
 		this.empId = empId;
-		System.out.println("ec2");
-		System.out.println("id");
-		System.out.println(empId);
+//		System.out.println("ec2");
+//		System.out.println("id");
+//		System.out.println(empId);
 	}
 
-	public Employee(GeneralDetails generalDetails, Spouse spouse, List<Address> addresses, List<Child> children) {
+	public Employee(long empId, GeneralDetails generalDetails, Spouse spouse, List<Address> addresses, List<Child> children) {
 		super();
-		System.out.println("ec3");
+//		System.out.println("ec3");
+		this.empId = empId;
 		this.generalDetails = generalDetails;
 		this.spouse = spouse;
 		this.addresses = addresses;
@@ -84,7 +80,7 @@ public class Employee {
 	public List<Address> getAddress() {
 		return addresses;
 	}
-	public List<Child> getChild() {
+	public List<Child> getChildren() {
 		return children;
 	}
 
@@ -106,10 +102,10 @@ public class Employee {
 	public String toString() {
 		return "Employee{" +
 				"employee_id=" + empId +
-				//", generalDetails=" + getGeneralDetails().getGeneral_details_id() +
-				//", spouse=" + getSpouse().getSpouse_id()+
-				//", addresses=" + Arrays.toString(addresses.toArray()) +
-				//", children=" + Arrays.toString(children.toArray()) +
+//				", generalDetails=" + getGeneralDetails().getGeneral_details_id() +
+//				", spouse=" + getSpouse().getSpouse_id()+
+//				", addresses=" + Arrays.toString(addresses.toArray()) +
+//				", children=" + Arrays.toString(children.toArray()) +
 				'}';
 	}
 

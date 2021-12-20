@@ -1,10 +1,11 @@
 package net.employee_managment.springboot.model;
-import net.employee_managment.springboot.model.Employee;
 
 import lombok.Data;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Data
@@ -31,29 +32,30 @@ public class Address{
 //    @NotNull
 //    @ManyToOne
 //    @JoinColumn(name = "Employee")
+    public Address() {
+        System.out.println("ac1");
+    //        System.out.println("c3");
+    //        System.out.println(address_ID);
+    //        System.out.println(fullAddress);
+
+    }
+
+    public Address(String fullAddress) {
+        System.out.println("ac2");
+        //this.address_ID = address_ID;
+        this.fullAddress = fullAddress;
+    }
 
     public Address(Long address_ID, String fullAddress, Employee employee) {
         super();
         Employee e = null;
-        System.out.println("c1");
-        System.out.println(address_ID);
-        System.out.println(fullAddress);
+          System.out.println("ac3");
+//        System.out.println(address_ID);
+//        System.out.println(fullAddress);
         //System.out.println(employee_id);
         this.address_ID = address_ID;
         this.fullAddress = fullAddress;
         e = employee;
-}
-
-    public Address(String fullAddress) {
-        System.out.println("c2");
-        this.fullAddress = fullAddress;
-    }
-    public Address() {
-        System.out.println("c3");
-        System.out.println(address_ID);
-        System.out.println(fullAddress);
-
-
     }
 
 
@@ -66,5 +68,4 @@ public class Address{
                 '}';
     }
 }
-
 

@@ -1,26 +1,12 @@
 package net.employee_managment.springboot.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.employee_managment.springboot.exception.ResourceNotFoundException;
-import net.employee_managment.springboot.model.Address;
-import net.employee_managment.springboot.model.Child;
-import net.employee_managment.springboot.model.Employee;
-import net.employee_managment.springboot.model.Spouse;
-import net.employee_managment.springboot.repository.AddressRepository;
-import net.employee_managment.springboot.repository.ChildRepository;
-import net.employee_managment.springboot.repository.EmployeeRepository;
-import net.employee_managment.springboot.repository.SpouseRepository;
-import net.employee_managment.springboot.service.AddressService;
-import net.employee_managment.springboot.service.ChildService;
-import net.employee_managment.springboot.service.EmployeeService;
-import net.employee_managment.springboot.service.SpouseService;
 import net.employee_managment.springboot.model.*;
 import net.employee_managment.springboot.repository.*;
 import net.employee_managment.springboot.service.*;
-//import org.apache.xerces.util.SAXInputSource;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService, SpouseService, AddressService, ChildService , GeneralDetailsService{
@@ -46,6 +32,7 @@ public class EmployeeServiceImpl implements EmployeeService, SpouseService, Addr
 	@Override
 	public Employee saveEmployee(Employee employee) {
 		System.out.println(employee);
+		System.out.println("employeeservice");
 		return employeeRepository.save(employee);
 	}
 
@@ -72,20 +59,23 @@ public class EmployeeServiceImpl implements EmployeeService, SpouseService, Addr
 		// we need to check whether employee with given id is exist in DB or not
 		Employee existingEmployee = employeeRepository.findById(id).orElseThrow(
 				() -> new ResourceNotFoundException("employee", "id", id));
-		for (Address A: employee.getAddress()) {
-			updateAddress(A,A.getAddress_ID());
-		}
+		if (employee.getAddress() != null)
+			for (Address A: employee.getAddress()) {
+				updateAddress(A,A.getAddress_ID());
+			}
 
-		for (Child C: employee.getChild()) {
-			updateChild(C, C.getChild_ID());
-		}
+		if (employee.getChildren() != null)
+			for (Child C: employee.getChildren()) {
+				updateChild(C, C.getChild_ID());
+			}
 
 		existingEmployee.setGeneralDetails(employee.getGeneralDetails());
 		existingEmployee.setSpouse(employee.getSpouse());
 
 		employeeRepository.save(existingEmployee);
+		System.out.println("existingEmployee");
+		System.out.println(existingEmployee);
 
-		// save existing employee to DB
 
 		return existingEmployee;
 	}
@@ -97,6 +87,13 @@ public class EmployeeServiceImpl implements EmployeeService, SpouseService, Addr
 		Employee existingEmployee = employeeRepository.findById(id).orElseThrow(() ->
 								new ResourceNotFoundException("employee", "id", id));
 		//existingEmployee.getChild().remove(getAllChild());
+		for (Address A: existingEmployee.getAddress()) {
+			deleteAddress(A.getAddress_ID());
+		}
+
+		for (Child C: existingEmployee.getChildren()) {
+			deleteChild(C.getChild_ID());
+		}
 
 
 		long gdId = existingEmployee.getGeneralDetails().getGeneral_details_id();
@@ -114,8 +111,8 @@ public class EmployeeServiceImpl implements EmployeeService, SpouseService, Addr
 
 	@Override
 	public GeneralDetails saveGeneralDetails(GeneralDetails generalDetails) {
-		System.out.println("saveGeneralDetails");
-		System.out.println(generalDetails);
+//		System.out.println("saveGeneralDetails");
+//		System.out.println(generalDetails);
 		return generalDetailsRepository.save(generalDetails);
 	}
 
@@ -154,7 +151,7 @@ public class EmployeeServiceImpl implements EmployeeService, SpouseService, Addr
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	@Override
 	public Spouse saveSpouse(Spouse spouse) {
-		System.out.println(spouse);
+//		System.out.println(spouse);
 		return spouseRepository.save(spouse);
 	}
 
@@ -192,7 +189,7 @@ public class EmployeeServiceImpl implements EmployeeService, SpouseService, Addr
 
 	@Override
 	public Address saveAddress(Address address) {
-		System.out.println(address);
+		//System.out.println(address);
 		return addressRepository.save(address);
 	}
 	@Override

@@ -20,6 +20,7 @@ public class Spouse<gender> {
 	private String spouseFullName;
 
 
+
 	public enum Gender {
 		@JsonProperty("Male")
 		MALE,

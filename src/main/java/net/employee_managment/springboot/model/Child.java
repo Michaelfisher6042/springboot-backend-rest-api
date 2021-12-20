@@ -1,8 +1,10 @@
 package net.employee_managment.springboot.model;
 
 import lombok.Data;
-
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Data
@@ -19,28 +21,31 @@ public class Child {
     @Column(name = "age", nullable = true)
     private String age;
 
-    public Child(Long child_ID, String childFullName, String age, Employee employee) {
-        super();
-        Employee e = null;
-        this.child_ID = child_ID;
-        this.childFullName = childFullName;
-        e = employee;
+    public Child() {
+        System.out.println("cc1");
     }
 
     public Child(String childFullName, String age) {
+        System.out.println("cc2");
         this.childFullName =childFullName;
         this.age=age;
     }
 
-    public Child() {
-
+    public Child(Long child_ID, String childFullName, String age, Employee employee) {
+        super();
+        System.out.println("cc3");
+        Employee e = null;
+        this.child_ID = child_ID;
+        this.childFullName = childFullName;
+        this.age=age;
+        e = employee;
     }
 
     @Override
     public String toString() {
         return "Child{" +
-                "fullName='" + childFullName + '\'' +
-                ", age='" + age + '\'' +
+//                "fullName='" + childFullName + '\'' +
+//                ", age='" + age + '\'' +
                 '}';
     }
 }
